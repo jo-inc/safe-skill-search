@@ -1,0 +1,47 @@
+[package]
+name = "skill-search"
+version = "0.1.0"
+edition = "2021"
+description = "Fast skill search across clawdhub, anthropic, and openai skill registries"
+license = "MIT"
+
+[dependencies]
+# Async runtime
+tokio = { version = "1", features = ["full"] }
+
+# HTTP client
+reqwest = { version = "0.12", features = ["json", "rustls-tls"], default-features = false }
+
+# SQLite with bundled
+rusqlite = { version = "0.32", features = ["bundled"] }
+
+# Serialization
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# CLI
+clap = { version = "4", features = ["derive"] }
+
+# Error handling
+anyhow = "1"
+thiserror = "1"
+
+# Utilities
+directories = "5"
+base64 = "0.22"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# YAML parsing for SKILL.md frontmatter
+serde_yaml = "0.9"
+
+# Fuzzy matching
+fuzzy-matcher = "0.3"
+
+# BM25/TF-IDF search
+tantivy = "0.22"
+
+[profile.release]
+lto = true
+codegen-units = 1
+strip = true
