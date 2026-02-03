@@ -1,6 +1,7 @@
 mod db;
 mod github;
 mod index;
+mod skillssh;
 
 use anyhow::Result;
 use clap::{Parser, Subcommand};
@@ -112,6 +113,7 @@ async fn main() -> Result<()> {
     if db.needs_initial_sync()? {
         tracing::info!("First launch detected, syncing skills...");
         github::sync_all_registries(&mut db, &repos_dir).await?;
+        skillssh::sync_skillssh(&mut db).await?;
         search_index.rebuild(&db)?;
     }
 
@@ -121,6 +123,7 @@ async fn main() -> Result<()> {
                 db.clear_sync_state()?;
             }
             github::sync_all_registries(&mut db, &repos_dir).await?;
+            skillssh::sync_skillssh(&mut db).await?;
             search_index.rebuild(&db)?;
             tracing::info!("Sync complete");
         }
