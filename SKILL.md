@@ -11,15 +11,15 @@ metadata:
 
 Search and discover agent skills across multiple registries with full-text search.
 
-## Setup
+## Setup (REQUIRED)
 
-Run the install script to download the binary:
+**IMPORTANT**: After installing this skill, you MUST run the install script to download the binary before using any commands:
 
 ```bash
-./scripts/install.sh
+scripts/install.sh
 ```
 
-This installs `skill-search` to `~/.local/bin/`. Ensure this is in your PATH.
+This downloads the `skill-search` binary to `~/.local/bin/`. The binary is required for all commands below to work.
 
 ## Quick Start
 
