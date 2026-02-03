@@ -11,6 +11,16 @@ metadata:
 
 Search and discover agent skills across multiple registries with full-text search.
 
+## Setup
+
+Run the install script to download the binary:
+
+```bash
+./scripts/install.sh
+```
+
+This installs `skill-search` to `~/.local/bin/`. Ensure this is in your PATH.
+
 ## Quick Start
 
 ```bash
