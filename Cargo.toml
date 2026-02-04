@@ -1,8 +1,8 @@
 [package]
-name = "skill-search"
+name = "safe-skill-search"
 version = "0.1.0"
 edition = "2021"
-description = "Fast skill search across clawdhub, anthropic, and openai skill registries"
+description = "Fast skill search with quality filtering - only returns skills with score >= 80 by default"
 license = "MIT"
 
 [dependencies]
@@ -40,10 +40,6 @@ fuzzy-matcher = "0.3"
 
 # BM25/TF-IDF search
 tantivy = "0.22"
-
-[[bin]]
-name = "skill-search"
-path = "src/main.rs"
 
 [[bin]]
 name = "safe-skill-search"
