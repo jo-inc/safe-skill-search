@@ -42,7 +42,7 @@ jobs:
           sudo apt-get install -y gcc-aarch64-linux-gnu
 
       - name: Build
-        run: cargo build --release --target ${{ matrix.target }}
+        run: cargo build --release --target ${{ matrix.target }} --bin safe-skill-search
         env:
           CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER: aarch64-linux-gnu-gcc
 
@@ -50,21 +50,21 @@ jobs:
         if: runner.os != 'Windows'
         run: |
           cd target/${{ matrix.target }}/release
-          tar czf ../../../skill-search-${{ matrix.target }}.tar.gz skill-search
+          tar czf ../../../safe-skill-search-${{ matrix.target }}.tar.gz safe-skill-search
           cd ../../..
 
       - name: Package (Windows)
         if: runner.os == 'Windows'
         run: |
           cd target/${{ matrix.target }}/release
-          7z a ../../../skill-search-${{ matrix.target }}.zip skill-search.exe
+          7z a ../../../safe-skill-search-${{ matrix.target }}.zip safe-skill-search.exe
           cd ../../..
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: skill-search-${{ matrix.target }}
-          path: skill-search-${{ matrix.target }}.*
+          name: safe-skill-search-${{ matrix.target }}
+          path: safe-skill-search-${{ matrix.target }}.*
 
   release:
     name: Create Release
