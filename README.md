@@ -4,7 +4,7 @@ Fast local search across agent skill registries with **quality filtering** - onl
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Based on analysis of **4,784 skills from 5 registries**: [Analyzing 4,784 AI Agent Skills →](https://skyfallsin.io/2026/02/03/ai-agent-skills-database.html)
+Based on analysis of **4,784 skills from 5 registries**: [Analyzing 4,784 AI Agent Skills →](https://skyfallsin.github.io/2026/02/03/ai-agent-skills-database.html)
 
 ## Features
 
@@ -78,7 +78,7 @@ safe-skill-search sync --force
 
 ## Quality Scores
 
-Quality scores are based on the [skills-db analysis](https://skyfallsin.io/2026/02/03/ai-agent-skills-database.html) which evaluated **4,784 skills from 5 registries**.
+Quality scores are based on the [skills-db analysis](https://skyfallsin.github.io/2026/02/03/ai-agent-skills-database.html) which evaluated **4,784 skills from 5 registries**.
 
 Scoring criteria:
 - Documentation completeness
