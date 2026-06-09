@@ -45,6 +45,12 @@ pub const REGISTRIES: &[Registry] = &[
         skills_path: "skills",
         trusted: true, // Official jo skills
     },
+    Registry {
+        name: "xquik",
+        repo_url: "https://github.com/Xquik-dev/tweetclaw.git",
+        skills_path: "skills",
+        trusted: false, // Community registry with project-owned skills
+    },
 ];
 
 #[derive(Debug, Deserialize)]
@@ -240,6 +246,7 @@ fn process_skill(db: &mut Database, registry: &Registry, skill_dir: &Path, skill
         "anthropic" => format!("https://github.com/anthropics/skills/tree/main/{}", rel_path.display()),
         "openai" | "openai-experimental" => format!("https://github.com/openai/skills/tree/main/{}", rel_path.display()),
         "jo" => format!("https://github.com/jo-inc/skills/tree/master/{}", rel_path.display()),
+        "xquik" => format!("https://github.com/Xquik-dev/tweetclaw/tree/master/{}", rel_path.display()),
         _ => format!("https://github.com/unknown/{}", rel_path.display()),
     };
 
@@ -379,7 +386,7 @@ This skill does cool things.
 
     #[test]
     fn test_registries_configuration() {
-        assert_eq!(REGISTRIES.len(), 5);
+        assert_eq!(REGISTRIES.len(), 6);
         
         let clawdhub = &REGISTRIES[0];
         assert_eq!(clawdhub.name, "clawdhub");
@@ -400,5 +407,11 @@ This skill does cool things.
         let jo = &REGISTRIES[4];
         assert_eq!(jo.name, "jo");
         assert!(jo.trusted);
+
+        let xquik = &REGISTRIES[5];
+        assert_eq!(xquik.name, "xquik");
+        assert_eq!(xquik.repo_url, "https://github.com/Xquik-dev/tweetclaw.git");
+        assert_eq!(xquik.skills_path, "skills");
+        assert!(!xquik.trusted);
     }
 }

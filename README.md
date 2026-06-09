@@ -4,7 +4,7 @@ Fast local search across agent skill registries with **quality filtering** - onl
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Based on analysis of **4,784 skills from 5 registries**: [Analyzing 4,784 AI Agent Skills →](https://skyfallsin.github.io/2026/02/03/ai-agent-skills-database.html)
+Based on [Analyzing 4,784 AI Agent Skills →](https://skyfallsin.github.io/2026/02/03/ai-agent-skills-database.html) plus manually reviewed registry additions.
 
 ## Features
 
@@ -12,7 +12,7 @@ Based on analysis of **4,784 skills from 5 registries**: [Analyzing 4,784 AI Age
 - **`--min-score` flag**: Override the minimum quality threshold (use 0 to show all)
 - **Fast local search**: Tantivy (BM25) full-text search engine
 - **Git-based sync**: Clones repos locally for instant access
-- **Multiple registries**: Searches clawdhub, anthropic, openai, and jo skills
+- **Multiple registries**: Searches clawdhub, anthropic, openai, jo, skills.sh, and xquik skills
 - **Trust indicators**: `[✓]` for trusted, `[⚠]` for untrusted
 - **Quality scores**: Shows `[Q:score]` for each skill
 
@@ -58,9 +58,9 @@ safe-skill-search search "browser automation" --min-score 90
 safe-skill-search search "pdf" --json
 
 # Filter by registry
-safe-skill-search search "pdf" --registry anthropic
+safe-skill-search search "tweet" --registry xquik
 
-# Only trusted skills (anthropic + openai official)
+# Only trusted skills (anthropic, openai, and jo official)
 safe-skill-search search "document" --trusted
 
 # Show top skills by stars (quality filtered)
@@ -78,7 +78,7 @@ safe-skill-search sync --force
 
 ## Quality Scores
 
-Quality scores are based on the [skills-db analysis](https://skyfallsin.github.io/2026/02/03/ai-agent-skills-database.html) which evaluated **4,784 skills from 5 registries**.
+Quality scores are based on the [skills-db analysis](https://skyfallsin.github.io/2026/02/03/ai-agent-skills-database.html) plus manually reviewed additions for new registries.
 
 Scoring criteria:
 - Documentation completeness
@@ -98,6 +98,8 @@ Scores range from 0-100, with 80+ being considered high-quality.
 | openai | github.com/openai/skills/.curated | ~31 | ✓ Official |
 | openai-experimental | github.com/openai/skills/.experimental | varies | ⚠ Experimental |
 | jo | github.com/jo-inc/skills | varies | ✓ Official |
+| skillssh | skills.sh | varies | ⚠ Community |
+| xquik | github.com/Xquik-dev/tweetclaw | 1 | ⚠ Community |
 
 ## Data Storage
 
