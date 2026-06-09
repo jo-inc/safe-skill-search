@@ -22,7 +22,9 @@ use tracing_subscriber::EnvFilter;
 
 #[derive(Parser)]
 #[command(name = "safe-skill-search")]
-#[command(about = "Search skills with quality filtering - only returns high-quality skills (score >= 80) by default")]
+#[command(
+    about = "Search skills with quality filtering - only returns high-quality skills (score >= 80) by default"
+)]
 #[command(version)]
 struct Cli {
     #[command(subcommand)]
@@ -54,11 +56,11 @@ enum Commands {
         #[arg(short, long, default_value = "10")]
         limit: usize,
 
-        /// Filter by registry (clawdhub, anthropic, openai)
+        /// Filter by registry (clawdhub, anthropic, openai, xquik)
         #[arg(short, long)]
         registry: Option<String>,
 
-        /// Only show trusted skills (anthropic, openai)
+        /// Only show trusted skills (anthropic, openai, jo)
         #[arg(long)]
         trusted: bool,
 
@@ -165,7 +167,7 @@ async fn main() -> Result<()> {
                             .get_score(&s.registry, &s.slug)
                             .or_else(|| quality_scores.get_score(&s.registry, &s.name))
                             .unwrap_or(0);
-                        
+
                         serde_json::json!({
                             "slug": s.slug,
                             "name": s.name,
@@ -188,15 +190,22 @@ async fn main() -> Result<()> {
                 println!("{}", serde_json::to_string_pretty(&enriched)?);
             } else {
                 if enriched.is_empty() {
-                    println!("No skills found with score >= {}. Try --min-score 0 to see all.", min_score);
+                    println!(
+                        "No skills found with score >= {}. Try --min-score 0 to see all.",
+                        min_score
+                    );
                 } else {
                     for (i, r) in enriched.iter().enumerate() {
                         let trusted = r["trusted"].as_bool().unwrap_or(false);
                         let trust_icon = if trusted { "✓" } else { "⚠" };
                         let stars = r["stars"].as_i64().unwrap_or(0);
                         let quality = r["quality_score"].as_i64().unwrap_or(0);
-                        let stars_str = if stars > 0 { format!(" ★{}", stars) } else { String::new() };
-                        
+                        let stars_str = if stars > 0 {
+                            format!(" ★{}", stars)
+                        } else {
+                            String::new()
+                        };
+
                         println!(
                             "{}. [{}] {}{} ({}) [Q:{}] - {}",
                             i + 1,
@@ -221,7 +230,7 @@ async fn main() -> Result<()> {
                         .get_score(&s.registry, &s.slug)
                         .or_else(|| quality_scores.get_score(&s.registry, &s.name))
                         .unwrap_or(0);
-                    
+
                     println!("Name: {}", s.name);
                     println!("Registry: {}", s.registry);
                     println!("Trusted: {}", if s.trusted { "yes" } else { "no" });
@@ -249,7 +258,11 @@ async fn main() -> Result<()> {
                 }
             }
         }
-        Commands::Top { limit, trusted, min_score } => {
+        Commands::Top {
+            limit,
+            trusted,
+            min_score,
+        } => {
             let all_skills = db.get_all_skills()?;
             let mut skills: Vec<_> = all_skills
                 .into_iter()
@@ -259,7 +272,7 @@ async fn main() -> Result<()> {
                         .get_score(&s.registry, &s.slug)
                         .or_else(|| quality_scores.get_score(&s.registry, &s.name))
                         .unwrap_or(0);
-                    
+
                     if quality_score >= min_score {
                         Some((s, quality_score))
                     } else {
@@ -267,11 +280,14 @@ async fn main() -> Result<()> {
                     }
                 })
                 .collect();
-            
+
             skills.sort_by(|a, b| b.0.stars.cmp(&a.0.stars));
 
             if skills.is_empty() {
-                println!("No skills found with score >= {}. Try --min-score 0 to see all.", min_score);
+                println!(
+                    "No skills found with score >= {}. Try --min-score 0 to see all.",
+                    min_score
+                );
             } else {
                 for (i, (s, quality_score)) in skills.iter().take(limit).enumerate() {
                     let trust_icon = if s.trusted { "✓" } else { "⚠" };
